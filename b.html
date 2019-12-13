@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    .box {
+      width: 500px;
+      height: 200px;
+      border: 1px solid #ccc;
+      margin: 50px auto;
+      overflow: hidden;
+    }
+
+    ul {
+      width: 600px;
+      height: 40px;
+      margin-left: -1px;
+      list-style: none;
+    }
+
+    li {
+      float: left;
+      width: 101px;
+      height: 40px;
+      text-align: center;
+      font: 600 18px/40px "simsun";
+      background-color: pink;
+      cursor: pointer;
+      /* 当鼠标移到此处变成手 */
+    }
+
+    span {
+      display: none;
+      width: 500px;
+      height: 160px;
+      background-color: yellow;
+      text-align: center;
+      font: 700 100px/160px "simsun";
+    }
+
+    .show {
+      display: block;
+    }
+
+    .current {
+      background-color: yellow;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <ul>
+      <li class="current">鞋子</li>
+      <li>袜子</li>
+      <li>帽子</li>
+      <li>裤子</li>
+      <li>裙子</li>
+    </ul>
+    <span class="show">买鞋子</span>
+    <span>买袜子</span>
+    <span>买帽子</span>
+    <span>买裤子</span>
+    <span>买裙子</span>
+  </div>
+  <script>
+    window.onload = function () {
+      //需求：鼠标放到上面的li上，li本身变色(添加类)，对应的span也显示出来(添加类);
+      //思路：1.点亮上面的盒子。   2.利用索引值显示下面的盒子。
+
+      var liArr = document.getElementsByTagName("li");
+      var spanArr = document.getElementsByTagName("span");
+
+      for (var i = 0; i < liArr.length; i++) {
+        //绑定索引值（新增一个自定义属性：index属性）
+        liArr[i].index = i;  //相当于liArr[i].setAttribute("index",i);
+
+        liArr[i].onmouseover = function () {//给所有li加上事件
+          //让所有的样式为空
+          for (var j = 0; j < liArr.length; j++) {
+            liArr[j].className = "";
+            spanArr[j].className = "";
+          }
+          //给当前选中的区域添加样式
+          this.className = "current";
+          spanArr[this.index].className = "show"; //this.index是获取当前liArr的index值
+        }
+      }
+    }
+  </script>
+
+</body>
+
+</body>
+
+</html>

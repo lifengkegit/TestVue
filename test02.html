@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="static/leaflet.css">
+  <script src="static/leaflet.js"></script>
+</head>
+
+<body>
+  <div id="mapid" style="width: 1000px; height: 600px;"></div>
+
+  <script>
+    //setView设置地图中心点的经纬度和比例尺，作为用户的视图区域。
+    var mymap = L.map('mapid').setView([30.535836, 114.349877], 16);
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+      maxZoom: 18,
+      id: 'mapbox/streets-v11'
+    }).addTo(mymap);
+
+    //L.marker就是图标，首先需设置的是图标的坐标，
+    L.marker([30.535836, 114.349877]).addTo(mymap).bindPopup('公司地点').openPopup();
+
+    L.circle([30.535836, 114.349877], {  //圆
+      color: 'red',
+      fillColor: '#f03',
+      fillOpacity: 0.5,
+      radius: 500
+    }).addTo(mymap)
+
+    L.polygon([                //三角形
+      [30.537129, 114.350166],
+      [30.534773, 114.348224],
+      [30.534773, 114.351615]
+    ]).addTo(mymap);
+
+    var popup = L.popup();
+
+    // 地图点击事件对象(例子中的e)有一个latlng属性表示点击发生的位置.
+    function onMapClick(e) {
+      popup
+        .setLatLng(e.latlng)
+        .setContent("坐标位置<br>纬度：" + e.latlng.lat + "<br>经度：" + e.latlng.lng)
+        .openOn(mymap);
+    }
+
+    mymap.on('click', onMapClick);
+
+  </script>
+</body>
+
+</html>
